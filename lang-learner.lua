@@ -140,22 +140,10 @@ function do_script(tag)
   call_ext_script(sub)
 end
 
-mp.add_key_binding(o["key_toggle_lang"], "ll-toggle-lang", do_toggle_lang)
-mp.add_key_binding(o["key_cycle_known"], "ll-cycle-known", do_cycle_known)
-
-mp.add_key_binding(o["key_seek_cur_sub"], "ll-seek-cur-sub", do_seek_current_sub)
-
 mp.add_key_binding(o["key_ab_loop_sub"], "ll-ab-loop-sub", do_ab_loop_sub)
 mp.add_key_binding(o["key_auto_ab_loop"], "ll-toggle-auto-ab-loop", toggle_auto_ab_loop)
 
-mp.add_key_binding(o["key_open_url1"], "ll-open-in-url1", function() do_open_in_url('url1'); end)
-mp.add_key_binding(o["key_open_url2"], "ll-open-in-url2", function() do_open_in_url('url2'); end)
-mp.add_key_binding(o["key_open_url3"], "ll-open-in-url3", function() do_open_in_url('url3'); end)
-
-mp.add_key_binding(o["key_store"], "ll-store", do_store)
-mp.add_key_binding(o["key_script"], "ll-script", do_script)
-
---
+  --
 -- Auto AB loop for new subs
 --
 local cur_subs = {}
@@ -230,10 +218,11 @@ function set_ab_loop()
 
   local a = mp.get_property("sub-start")
   local b = mp.get_property("sub-end")
+  local delay = mp.get_property_native("sub-delay")
   if a == nil or b == nil then return; end
 
-  mp.set_property("ab-loop-a", a)
-  mp.set_property("ab-loop-b", b)
+  mp.set_property("ab-loop-a", a+delay)
+  mp.set_property("ab-loop-b", b+delay)
 end
 
 function set_slang(tag)
